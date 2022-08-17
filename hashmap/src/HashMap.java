@@ -10,6 +10,17 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
 
     @Override
     public void put(K k, V v) {
+        Entry<K, V> entry = new Entry<>(k, v);
+        int hashcode = entry.hashcode();
+        int index = hashcode % capacity;
+        if (entries[index] == null) {
+            // 如果slot为空，直接保存
+            entries[index] = entry;
+            size++;
+        } else {
+            // 否则追加到队尾
+            entries[index].addLast(entry);
+        }
     }
 
     @Override

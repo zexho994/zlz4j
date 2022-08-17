@@ -59,4 +59,30 @@ class HashMapTest {
         Assertions.assertNull(hashMap.get(9));
         Assertions.assertEquals(hashMap.size(), 3);
     }
+
+    @Test
+    void resize() {
+        HashMap<Integer, Integer> hashMap = new HashMap<>(4);
+        hashMap.put(1, 1);
+        hashMap.put(2, 2);
+        hashMap.put(5, 5);
+        Assertions.assertEquals(hashMap.size(), 3);
+        Assertions.assertEquals(hashMap.capacity, 8);
+        Assertions.assertNotNull(hashMap.get(1));
+        Assertions.assertNotNull(hashMap.get(2));
+        Assertions.assertNotNull(hashMap.get(5));
+        Assertions.assertNull(hashMap.get(4));
+
+        hashMap.put(4, 4);
+        hashMap.put(10, 10);
+        Assertions.assertEquals(hashMap.size(), 5);
+        Assertions.assertEquals(hashMap.capacity, 8);
+
+        hashMap.put(20, 20);
+        Assertions.assertNotNull(hashMap.get(4));
+        Assertions.assertNotNull(hashMap.get(10));
+        Assertions.assertNotNull(hashMap.get(20));
+        Assertions.assertEquals(hashMap.size(), 6);
+        Assertions.assertEquals(hashMap.capacity, 16);
+    }
 }

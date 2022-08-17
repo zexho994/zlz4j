@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * @author Zexho
  * @date 8/17/22 10:47 AM
@@ -7,6 +9,7 @@ public abstract class AbstractMap<K, V> {
     protected Entry<K, V>[] entries;
     protected int capacity = 16;
     protected static int size = 0;
+    protected float threshold = 0.75f;
 
     protected static class Entry<K, V> {
         private K key;

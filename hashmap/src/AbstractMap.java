@@ -31,6 +31,22 @@ public abstract class AbstractMap<K, V> {
             return key.hashCode();
         }
 
+        public Entry<K, V> getPre() {
+            return pre;
+        }
+
+        public Entry<K, V> getNext() {
+            return next;
+        }
+
+        public void setPre(Entry<K, V> pre) {
+            this.pre = pre;
+        }
+
+        public void setNext(Entry<K, V> next) {
+            this.next = next;
+        }
+
         /**
          * 插入到队尾
          */

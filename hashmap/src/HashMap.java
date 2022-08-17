@@ -25,6 +25,15 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
 
     @Override
     public V get(K k) {
+        int hashcode = k.hashCode();
+        int index = hashcode % capacity;
+        Entry<K, V> e = entries[index];
+        while (e != null) {
+            if (e.getKey().equals(k)) {
+                return e.getVal();
+            }
+            e = e.getNext();
+        }
         return null;
     }
 
@@ -32,8 +41,10 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
     public void remove(K k) {
     }
 
+
     @Override
     void resize() {
+
     }
 
 }

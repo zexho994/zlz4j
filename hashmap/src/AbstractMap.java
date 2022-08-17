@@ -59,4 +59,18 @@ public abstract class AbstractMap<K, V> {
      */
     abstract void resize();
 
+    public boolean containsKey(K k) {
+        int hashcode = k.hashCode();
+        int idx = hashcode % capacity;
+        Entry<K, V> e = entries[idx];
+        if (e == null) return false;
+        while (e != null) {
+            if (e.key.equals(k)) {
+                return true;
+            }
+            e = e.next;
+        }
+        return false;
+    }
+
 }

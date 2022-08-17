@@ -8,18 +8,20 @@ public abstract class AbstractMap<K, V> {
 
     protected Entry<K, V>[] entries;
     protected int capacity = 16;
-    protected static int size = 0;
+    protected int size = 0;
     protected float threshold = 0.75f;
 
     protected static class Entry<K, V> {
         private K key;
         private V val;
+        private final int hash;
         private Entry<K, V> pre;
         private Entry<K, V> next;
 
         public Entry(K key, V val) {
             this.key = key;
             this.val = val;
+            hash = key.hashCode();
         }
 
         public K getKey() {
@@ -31,7 +33,7 @@ public abstract class AbstractMap<K, V> {
         }
 
         public int hashcode() {
-            return key.hashCode();
+            return this.hash;
         }
 
         public Entry<K, V> getPre() {
@@ -50,25 +52,13 @@ public abstract class AbstractMap<K, V> {
             this.next = next;
         }
 
-        /**
-         * 插入到队尾
-         */
-        public void addLast(Entry<K, V> entry) {
-            // 存在相同key，进行覆盖
-            if (this.key.equals(entry.key)) {
-                this.val = entry.val;
-                return;
-            }
-
-            if (next == null) {
-                next = entry;
-                entry.pre = this;
-                size++;
-            } else {
-                next.addLast(entry);
-            }
+        public void setKey(K key) {
+            this.key = key;
         }
 
+        public void setVal(V val) {
+            this.val = val;
+        }
     }
 
     public AbstractMap(int capacity) {

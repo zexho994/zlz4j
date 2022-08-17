@@ -10,21 +10,33 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
 
     @Override
     public void put(K k, V v) {
+        // 是否需要扩容
+        if (size >= capacity * threshold) {
+            resize();
+        }
+
         Entry<K, V> entry = new Entry<>(k, v);
-        int hashcode = entry.hashcode();
-        int index = hashcode % capacity;
-        if (entries[index] == null) {
+        int index = entry.hashcode() % capacity;
+        Entry<K, V> e;
+        if ((e = entries[index]) == null) {
             // 如果slot为空，直接保存
             entries[index] = entry;
             size++;
         } else {
-            // 否则追加到队尾
-            entries[index].addLast(entry);
-        }
-
-        // 是否需要扩容
-        if (size >= capacity * threshold) {
-            resize();
+            // 存在相同key，进行覆盖
+            while (e.getNext() != null && !e.getKey().equals(k)) {
+                if (e.getKey().equals(k)) {
+                    e.setVal(v);
+                }
+                e = e.getNext();
+            }
+            if (e.getKey().equals(k)) {
+                e.setVal(v);
+            } else {
+                e.setNext(entry);
+                entry.setPre(e);
+                size++;
+            }
         }
     }
 
